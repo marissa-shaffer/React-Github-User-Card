@@ -8,8 +8,7 @@ class App extends Component {
     this.state = {
       profile: [],
       followers:[],
-      userText: "",
-      error: ""
+      userText: ""
     };
   }
 
@@ -26,51 +25,12 @@ class App extends Component {
     axios
       .get("https://api.github.com/users/marissa-shaffer/followers")
       .then(res => {
+        console.log("followers", res)
         this.setState({
           followers: res.data
         });
       })
       .catch(err => console.log("no followers", err));
-  }
-
-  handleChanges = e => {
-    this.setState({ userText: e.target.value});
-    console.log(e.target.value);
-  };
-
-  componentDidUpdate() {
-    console.log("componentDidIpdate running");
-
-    axios
-      .get(`https://api.github.com/users/${this.state.userText}`)
-      .then(res => {
-        this.setState({
-          profile: res.data
-        });
-      })
-      .catch(err => console.log("no profiles", err));
-
-      axios
-        .get(`https://api.github.com/users/${this.state.userText}/followers`)
-        .then(res => {
-          this.setState({
-            followers: res.data
-          });
-        })
-        .catch(err => console.log("no followers", err));
-    }
-  
-  fetchUser = e => {
-    e.preventDefault();
-
-    axios
-      .get(`https://api.github.com/users/${this.state.userText}/followers`)
-      .then(res => {
-        this.setState({
-          followers: res.data
-        });
-      })
-      .catch (err => console.log(err)); 
   }
 
   render() {
@@ -90,8 +50,7 @@ class App extends Component {
           </p>
           <p>followers: {this.state.profile.followers}</p>
         </div>
-        
-      </div> //App
+      </div>
     );
   }
 }
